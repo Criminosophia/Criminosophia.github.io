@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="data/Jacona_Puntos_Narcomenudeo_Cuadrcula_1.js"></script>
+        <script src="data/colonias_jacona_2.js"></script>
+        <script src="data/Jacona_Puntos_Narcomenudeo_3.js"></script>
+        <script src="data/Jacona_Detenciones_Narcomenudeo_4.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[19.93778613397988,-102.3197374565736],[19.945900252270828,-102.30682455912164]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleMaps_0');
+        map.getPane('pane_GoogleMaps_0').style.zIndex = 400;
+        var layer_GoogleMaps_0 = L.tileLayer('http://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleMaps_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 22
+        });
+        layer_GoogleMaps_0;
+        map.addLayer(layer_GoogleMaps_0);
+        function pop_Jacona_Puntos_Narcomenudeo_Cuadrcula_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['left'] !== null ? autolinker.link(feature.properties['left'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['top'] !== null ? autolinker.link(feature.properties['top'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['right'] !== null ? autolinker.link(feature.properties['right'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['bottom'] !== null ? autolinker.link(feature.properties['bottom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>puntos_nar</strong><br />' + (feature.properties['puntos_nar'] !== null ? autolinker.link(feature.properties['puntos_nar'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jacona_Puntos_Narcomenudeo_Cuadrcula_1_0(feature) {
+            if (feature.properties['puntos_nar'] >= 0.000000 && feature.properties['puntos_nar'] <= 1.000000 ) {
+                return {
+                pane: 'pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(241,238,246,0.5)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['puntos_nar'] >= 1.000000 && feature.properties['puntos_nar'] <= 2.000000 ) {
+                return {
+                pane: 'pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(218,154,203,0.5)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['puntos_nar'] >= 2.000000 && feature.properties['puntos_nar'] <= 3.000000 ) {
+                return {
+                pane: 'pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(222,52,138,0.5)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['puntos_nar'] >= 3.000000 && feature.properties['puntos_nar'] <= 4.000000 ) {
+                return {
+                pane: 'pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+                stroke: false, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(152,0,67,0.5)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1');
+        map.getPane('pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1').style.zIndex = 401;
+        map.getPane('pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1').style['mix-blend-mode'] = 'normal';
+        var layer_Jacona_Puntos_Narcomenudeo_Cuadrcula_1 = new L.geoJson(json_Jacona_Puntos_Narcomenudeo_Cuadrcula_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+            layerName: 'layer_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+            pane: 'pane_Jacona_Puntos_Narcomenudeo_Cuadrcula_1',
+            onEachFeature: pop_Jacona_Puntos_Narcomenudeo_Cuadrcula_1,
+            style: style_Jacona_Puntos_Narcomenudeo_Cuadrcula_1_0,
+        });
+        bounds_group.addLayer(layer_Jacona_Puntos_Narcomenudeo_Cuadrcula_1);
+        map.addLayer(layer_Jacona_Puntos_Narcomenudeo_Cuadrcula_1);
+        function pop_colonias_jacona_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['POSTALCODE'] !== null ? autolinker.link(feature.properties['POSTALCODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ST_NAME'] !== null ? autolinker.link(feature.properties['ST_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['MUN_NAME'] !== null ? autolinker.link(feature.properties['MUN_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SETT_NAME'] !== null ? autolinker.link(feature.properties['SETT_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SETT_TYPE'] !== null ? autolinker.link(feature.properties['SETT_TYPE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['AREA'] !== null ? autolinker.link(feature.properties['AREA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_colonias_jacona_2_0() {
+            return {
+                pane: 'pane_colonias_jacona_2',
+                opacity: 1,
+                color: 'rgba(82,82,82,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_colonias_jacona_2');
+        map.getPane('pane_colonias_jacona_2').style.zIndex = 402;
+        map.getPane('pane_colonias_jacona_2').style['mix-blend-mode'] = 'normal';
+        var layer_colonias_jacona_2 = new L.geoJson(json_colonias_jacona_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_colonias_jacona_2',
+            layerName: 'layer_colonias_jacona_2',
+            pane: 'pane_colonias_jacona_2',
+            onEachFeature: pop_colonias_jacona_2,
+            style: style_colonias_jacona_2_0,
+        });
+        bounds_group.addLayer(layer_colonias_jacona_2);
+        map.addLayer(layer_colonias_jacona_2);
+        function pop_Jacona_Puntos_Narcomenudeo_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['No.'] !== null ? autolinker.link(feature.properties['No.'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>FECHA</strong><br />' + (feature.properties['FECHA'] !== null ? autolinker.link(feature.properties['FECHA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CALLE Y NUMERO'] !== null ? autolinker.link(feature.properties['CALLE Y NUMERO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COLONIA'] !== null ? autolinker.link(feature.properties['COLONIA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COORDENADAS'] !== null ? autolinker.link(feature.properties['COORDENADAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitud'] !== null ? autolinker.link(feature.properties['latitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitud'] !== null ? autolinker.link(feature.properties['longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_8'] !== null ? autolinker.link(feature.properties['field_8'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jacona_Puntos_Narcomenudeo_3_0() {
+            return {
+                pane: 'pane_Jacona_Puntos_Narcomenudeo_3',
+                shape: 'diamond',
+                radius: 7.0,
+                opacity: 1,
+                color: 'rgba(128,17,25,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,30,42,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Jacona_Puntos_Narcomenudeo_3');
+        map.getPane('pane_Jacona_Puntos_Narcomenudeo_3').style.zIndex = 403;
+        map.getPane('pane_Jacona_Puntos_Narcomenudeo_3').style['mix-blend-mode'] = 'normal';
+        var layer_Jacona_Puntos_Narcomenudeo_3 = new L.geoJson(json_Jacona_Puntos_Narcomenudeo_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jacona_Puntos_Narcomenudeo_3',
+            layerName: 'layer_Jacona_Puntos_Narcomenudeo_3',
+            pane: 'pane_Jacona_Puntos_Narcomenudeo_3',
+            onEachFeature: pop_Jacona_Puntos_Narcomenudeo_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Jacona_Puntos_Narcomenudeo_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Jacona_Puntos_Narcomenudeo_3);
+        map.addLayer(layer_Jacona_Puntos_Narcomenudeo_3);
+        function pop_Jacona_Detenciones_Narcomenudeo_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['No.'] !== null ? autolinker.link(feature.properties['No.'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>FECHA</strong><br />' + (feature.properties['FECHA'] !== null ? autolinker.link(feature.properties['FECHA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COORDENADAS'] !== null ? autolinker.link(feature.properties['COORDENADAS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitud'] !== null ? autolinker.link(feature.properties['latitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitud'] !== null ? autolinker.link(feature.properties['longitud'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DELITO'] !== null ? autolinker.link(feature.properties['DELITO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>SEXO</strong><br />' + (feature.properties['SEXO'] !== null ? autolinker.link(feature.properties['SEXO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>EDAD</strong><br />' + (feature.properties['EDAD'] !== null ? autolinker.link(feature.properties['EDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>DOMICILIO</strong><br />' + (feature.properties['DOMICILIO'] !== null ? autolinker.link(feature.properties['DOMICILIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>delito_nuevo</strong><br />' + (feature.properties['delito_nuevo'] !== null ? autolinker.link(feature.properties['delito_nuevo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jacona_Detenciones_Narcomenudeo_4_0() {
+            return {
+                pane: 'pane_Jacona_Detenciones_Narcomenudeo_4',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(61,128,53,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(84,176,74,0.7)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Jacona_Detenciones_Narcomenudeo_4');
+        map.getPane('pane_Jacona_Detenciones_Narcomenudeo_4').style.zIndex = 404;
+        map.getPane('pane_Jacona_Detenciones_Narcomenudeo_4').style['mix-blend-mode'] = 'normal';
+        var layer_Jacona_Detenciones_Narcomenudeo_4 = new L.geoJson(json_Jacona_Detenciones_Narcomenudeo_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jacona_Detenciones_Narcomenudeo_4',
+            layerName: 'layer_Jacona_Detenciones_Narcomenudeo_4',
+            pane: 'pane_Jacona_Detenciones_Narcomenudeo_4',
+            onEachFeature: pop_Jacona_Detenciones_Narcomenudeo_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Jacona_Detenciones_Narcomenudeo_4_0(feature));
+            },
+        });
+        var cluster_Jacona_Detenciones_Narcomenudeo_4 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_Jacona_Detenciones_Narcomenudeo_4.addLayer(layer_Jacona_Detenciones_Narcomenudeo_4);
+
+        bounds_group.addLayer(layer_Jacona_Detenciones_Narcomenudeo_4);
+        cluster_Jacona_Detenciones_Narcomenudeo_4.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Jacona_Detenciones_Narcomenudeo_4.png" /> Jacona_Detenciones_Narcomenudeo': cluster_Jacona_Detenciones_Narcomenudeo_4,'<img src="legend/Jacona_Puntos_Narcomenudeo_3.png" /> Jacona_Puntos_Narcomenudeo': layer_Jacona_Puntos_Narcomenudeo_3,'<img src="legend/colonias_jacona_2.png" /> colonias_jacona': layer_colonias_jacona_2,'Jacona_Puntos_Narcomenudeo_Cuadrícula<br /><table><tr><td style="text-align: center;"><img src="legend/Jacona_Puntos_Narcomenudeo_Cuadrcula_1_010.png" /></td><td>0 - 1</td></tr><tr><td style="text-align: center;"><img src="legend/Jacona_Puntos_Narcomenudeo_Cuadrcula_1_121.png" /></td><td>1 - 2</td></tr><tr><td style="text-align: center;"><img src="legend/Jacona_Puntos_Narcomenudeo_Cuadrcula_1_232.png" /></td><td>2 - 3</td></tr><tr><td style="text-align: center;"><img src="legend/Jacona_Puntos_Narcomenudeo_Cuadrcula_1_343.png" /></td><td>3 - 4</td></tr></table>': layer_Jacona_Puntos_Narcomenudeo_Cuadrcula_1,"Google Maps": layer_GoogleMaps_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        </script>
+    </body>
+</html>

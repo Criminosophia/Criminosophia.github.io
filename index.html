@@ -1,0 +1,1244 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/reasdeincidenciaacumulada20192022_2.js"></script>
+        <script src="data/Incidenciadelictiva20192022_3.js"></script>
+        <script src="data/Npolesampliacin_4.js"></script>
+        <script src="data/Npoles_5.js"></script>
+        <script src="data/DelValleIII_6.js"></script>
+        <script src="data/DelValleII_7.js"></script>
+        <script src="data/Departamentosenventa_8.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:13
+        }).fitBounds([[19.383112095318193,-99.18387716322484],[19.40061758266597,-99.15810221252873]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_GoogleSatellite_0');
+        map.getPane('pane_GoogleSatellite_0').style.zIndex = 400;
+        var layer_GoogleSatellite_0 = L.tileLayer('http://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 13,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 22
+        });
+        layer_GoogleSatellite_0;
+        map.addLayer(layer_GoogleSatellite_0);
+        map.createPane('pane_OpenStreetMap_1');
+        map.getPane('pane_OpenStreetMap_1').style.zIndex = 401;
+        var layer_OpenStreetMap_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 13,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 18
+        });
+        layer_OpenStreetMap_1;
+        map.addLayer(layer_OpenStreetMap_1);
+        function pop_reasdeincidenciaacumulada20192022_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['left'] !== null ? autolinker.link(feature.properties['left'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['top'] !== null ? autolinker.link(feature.properties['top'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['right'] !== null ? autolinker.link(feature.properties['right'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['bottom'] !== null ? autolinker.link(feature.properties['bottom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['frecuencia'] !== null ? autolinker.link(feature.properties['frecuencia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_reasdeincidenciaacumulada20192022_2_0(feature) {
+            if (feature.properties['frecuencia'] >= 0.000000 && feature.properties['frecuencia'] <= 1.000000 ) {
+                return {
+                pane: 'pane_reasdeincidenciaacumulada20192022_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.5)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,0.5)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['frecuencia'] >= 1.000000 && feature.properties['frecuencia'] <= 3.000000 ) {
+                return {
+                pane: 'pane_reasdeincidenciaacumulada20192022_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.5)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,180,185,0.5)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['frecuencia'] >= 3.000000 && feature.properties['frecuencia'] <= 5.000000 ) {
+                return {
+                pane: 'pane_reasdeincidenciaacumulada20192022_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.5)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,104,161,0.5)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['frecuencia'] >= 5.000000 && feature.properties['frecuencia'] <= 9.000000 ) {
+                return {
+                pane: 'pane_reasdeincidenciaacumulada20192022_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.5)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(197,27,138,0.5)',
+                interactive: false,
+            }
+            }
+            if (feature.properties['frecuencia'] >= 9.000000 && feature.properties['frecuencia'] <= 17.000000 ) {
+                return {
+                pane: 'pane_reasdeincidenciaacumulada20192022_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.5)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,1,119,0.5)',
+                interactive: false,
+            }
+            }
+        }
+        map.createPane('pane_reasdeincidenciaacumulada20192022_2');
+        map.getPane('pane_reasdeincidenciaacumulada20192022_2').style.zIndex = 402;
+        map.getPane('pane_reasdeincidenciaacumulada20192022_2').style['mix-blend-mode'] = 'normal';
+        var layer_reasdeincidenciaacumulada20192022_2 = new L.geoJson(json_reasdeincidenciaacumulada20192022_2, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_reasdeincidenciaacumulada20192022_2',
+            layerName: 'layer_reasdeincidenciaacumulada20192022_2',
+            pane: 'pane_reasdeincidenciaacumulada20192022_2',
+            onEachFeature: pop_reasdeincidenciaacumulada20192022_2,
+            style: style_reasdeincidenciaacumulada20192022_2_0,
+        });
+        bounds_group.addLayer(layer_reasdeincidenciaacumulada20192022_2);
+        map.addLayer(layer_reasdeincidenciaacumulada20192022_2);
+        function pop_Incidenciadelictiva20192022_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>ao_hechos</strong><br />' + (feature.properties['ao_hechos'] !== null ? autolinker.link(feature.properties['ao_hechos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>mes_hechos</strong><br />' + (feature.properties['mes_hechos'] !== null ? autolinker.link(feature.properties['mes_hechos'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>fecha_hech</strong><br />' + (feature.properties['fecha_hech'] !== null ? autolinker.link(feature.properties['fecha_hech'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>hora_hecho</strong><br />' + (feature.properties['hora_hecho'] !== null ? autolinker.link(feature.properties['hora_hecho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Tipo delic</strong><br />' + (feature.properties['Tipo delic'] !== null ? autolinker.link(feature.properties['Tipo delic'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>delito</strong><br />' + (feature.properties['delito'] !== null ? autolinker.link(feature.properties['delito'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+        function style_Incidenciadelictiva20192022_3_0(feature) {
+            var context = {
+                feature: feature,
+                variables: {}
+            };
+            // Start of if blocks and style check logic
+            if (exp_Incidenciadelictiva20192022_3rule0_eval_expression(context)) {
+                  return {
+                pane: 'pane_Incidenciadelictiva20192022_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/House-affected.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            };
+                }
+                else if (exp_Incidenciadelictiva20192022_3rule1_eval_expression(context)) {
+                  return {
+                pane: 'pane_Incidenciadelictiva20192022_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/House-destroyed.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            };
+                }
+                else if (exp_Incidenciadelictiva20192022_3rule2_eval_expression(context)) {
+                  return {
+                pane: 'pane_Incidenciadelictiva20192022_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/Harassment-intimidation.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            };
+                }
+                else if (exp_Incidenciadelictiva20192022_3rule3_eval_expression(context)) {
+                  return {
+                pane: 'pane_Incidenciadelictiva20192022_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/Assault.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            };
+                }
+                else if (exp_Incidenciadelictiva20192022_3rule4_eval_expression(context)) {
+                  return {
+                pane: 'pane_Incidenciadelictiva20192022_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/Carjacking.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            };
+                }
+                else if (exp_Incidenciadelictiva20192022_3rule5_eval_expression(context)) {
+                  return {
+                pane: 'pane_Incidenciadelictiva20192022_3',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/shopping_car_repair.svg',
+            iconSize: [19.0, 19.0]
+        }),
+                interactive: true,
+            };
+                }
+            else {
+                return {fill: false, stroke: false};
+            }
+        }
+        map.createPane('pane_Incidenciadelictiva20192022_3');
+        map.getPane('pane_Incidenciadelictiva20192022_3').style.zIndex = 403;
+        map.getPane('pane_Incidenciadelictiva20192022_3').style['mix-blend-mode'] = 'normal';
+        var layer_Incidenciadelictiva20192022_3 = new L.geoJson(json_Incidenciadelictiva20192022_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Incidenciadelictiva20192022_3',
+            layerName: 'layer_Incidenciadelictiva20192022_3',
+            pane: 'pane_Incidenciadelictiva20192022_3',
+            onEachFeature: pop_Incidenciadelictiva20192022_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Incidenciadelictiva20192022_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Incidenciadelictiva20192022_3);
+        map.addLayer(layer_Incidenciadelictiva20192022_3);
+        function pop_Npolesampliacin_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENT'] !== null ? autolinker.link(feature.properties['ENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEDT'] !== null ? autolinker.link(feature.properties['CVEDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DTTOLOC'] !== null ? autolinker.link(feature.properties['DTTOLOC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Npolesampliacin_4_0() {
+            return {
+                pane: 'pane_Npolesampliacin_4',
+                opacity: 1,
+                color: 'rgba(54,95,229,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Npolesampliacin_4');
+        map.getPane('pane_Npolesampliacin_4').style.zIndex = 404;
+        map.getPane('pane_Npolesampliacin_4').style['mix-blend-mode'] = 'normal';
+        var layer_Npolesampliacin_4 = new L.geoJson(json_Npolesampliacin_4, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Npolesampliacin_4',
+            layerName: 'layer_Npolesampliacin_4',
+            pane: 'pane_Npolesampliacin_4',
+            onEachFeature: pop_Npolesampliacin_4,
+            style: style_Npolesampliacin_4_0,
+        });
+        bounds_group.addLayer(layer_Npolesampliacin_4);
+        map.addLayer(layer_Npolesampliacin_4);
+        function pop_Npoles_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENT'] !== null ? autolinker.link(feature.properties['ENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEDT'] !== null ? autolinker.link(feature.properties['CVEDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DTTOLOC'] !== null ? autolinker.link(feature.properties['DTTOLOC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Npoles_5_0() {
+            return {
+                pane: 'pane_Npoles_5',
+                opacity: 1,
+                color: 'rgba(51,215,180,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Npoles_5');
+        map.getPane('pane_Npoles_5').style.zIndex = 405;
+        map.getPane('pane_Npoles_5').style['mix-blend-mode'] = 'normal';
+        var layer_Npoles_5 = new L.geoJson(json_Npoles_5, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_Npoles_5',
+            layerName: 'layer_Npoles_5',
+            pane: 'pane_Npoles_5',
+            onEachFeature: pop_Npoles_5,
+            style: style_Npoles_5_0,
+        });
+        bounds_group.addLayer(layer_Npoles_5);
+        map.addLayer(layer_Npoles_5);
+        function pop_DelValleIII_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENT'] !== null ? autolinker.link(feature.properties['ENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEDT'] !== null ? autolinker.link(feature.properties['CVEDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DTTOLOC'] !== null ? autolinker.link(feature.properties['DTTOLOC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DelValleIII_6_0() {
+            return {
+                pane: 'pane_DelValleIII_6',
+                opacity: 1,
+                color: 'rgba(65,67,135,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_DelValleIII_6');
+        map.getPane('pane_DelValleIII_6').style.zIndex = 406;
+        map.getPane('pane_DelValleIII_6').style['mix-blend-mode'] = 'normal';
+        var layer_DelValleIII_6 = new L.geoJson(json_DelValleIII_6, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_DelValleIII_6',
+            layerName: 'layer_DelValleIII_6',
+            pane: 'pane_DelValleIII_6',
+            onEachFeature: pop_DelValleIII_6,
+            style: style_DelValleIII_6_0,
+        });
+        bounds_group.addLayer(layer_DelValleIII_6);
+        map.addLayer(layer_DelValleIII_6);
+        function pop_DelValleII_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ENT'] !== null ? autolinker.link(feature.properties['ENT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEDT'] !== null ? autolinker.link(feature.properties['CVEDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMDT'] !== null ? autolinker.link(feature.properties['NOMDT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['DTTOLOC'] !== null ? autolinker.link(feature.properties['DTTOLOC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CVEUT'] !== null ? autolinker.link(feature.properties['CVEUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NOMUT'] !== null ? autolinker.link(feature.properties['NOMUT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID'] !== null ? autolinker.link(feature.properties['ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_DelValleII_7_0() {
+            return {
+                pane: 'pane_DelValleII_7',
+                opacity: 1,
+                color: 'rgba(122,1,119,1.0)',
+                dashArray: '10,5',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fillOpacity: 0,
+                interactive: false,
+            }
+        }
+        map.createPane('pane_DelValleII_7');
+        map.getPane('pane_DelValleII_7').style.zIndex = 407;
+        map.getPane('pane_DelValleII_7').style['mix-blend-mode'] = 'normal';
+        var layer_DelValleII_7 = new L.geoJson(json_DelValleII_7, {
+            attribution: '',
+            interactive: false,
+            dataVar: 'json_DelValleII_7',
+            layerName: 'layer_DelValleII_7',
+            pane: 'pane_DelValleII_7',
+            onEachFeature: pop_DelValleII_7,
+            style: style_DelValleII_7_0,
+        });
+        bounds_group.addLayer(layer_DelValleII_7);
+        map.addLayer(layer_DelValleII_7);
+        function pop_Departamentosenventa_8(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Dirección</strong><br />' + (feature.properties['Dirección'] !== null ? autolinker.link(feature.properties['Dirección'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Colonia</strong><br />' + (feature.properties['Colonia'] !== null ? autolinker.link(feature.properties['Colonia'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Precio</strong><br />' + (feature.properties['Precio'] !== null ? autolinker.link(feature.properties['Precio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Estado</strong><br />' + (feature.properties['Estado'] !== null ? autolinker.link(feature.properties['Estado'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Área (m2)</strong><br />' + (feature.properties['Área (m2)'] !== null ? autolinker.link(feature.properties['Área (m2)'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Recámaras</strong><br />' + (feature.properties['Recámaras'] !== null ? autolinker.link(feature.properties['Recámaras'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Baño</strong><br />' + (feature.properties['Baño'] !== null ? autolinker.link(feature.properties['Baño'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>Estacionamiento</strong><br />' + (feature.properties['Estacionamiento'] !== null ? autolinker.link(feature.properties['Estacionamiento'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Departamentosenventa_8_0() {
+            return {
+                pane: 'pane_Departamentosenventa_8',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/Building.svg',
+            iconSize: [38.0, 38.0]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Departamentosenventa_8');
+        map.getPane('pane_Departamentosenventa_8').style.zIndex = 408;
+        map.getPane('pane_Departamentosenventa_8').style['mix-blend-mode'] = 'normal';
+        var layer_Departamentosenventa_8 = new L.geoJson(json_Departamentosenventa_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Departamentosenventa_8',
+            layerName: 'layer_Departamentosenventa_8',
+            pane: 'pane_Departamentosenventa_8',
+            onEachFeature: pop_Departamentosenventa_8,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_Departamentosenventa_8_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Departamentosenventa_8);
+        map.addLayer(layer_Departamentosenventa_8);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/Departamentosenventa_8.png" /> Departamentos en venta': layer_Departamentosenventa_8,'<img src="legend/DelValleII_7.png" /> Del Valle II': layer_DelValleII_7,'<img src="legend/DelValleIII_6.png" /> Del Valle III': layer_DelValleIII_6,'<img src="legend/Npoles_5.png" /> Nápoles': layer_Npoles_5,'<img src="legend/Npolesampliacin_4.png" /> Nápoles (ampliación)': layer_Npolesampliacin_4,'Incidencia delictiva 2019-2022<br /><table><tr><td style="text-align: center;"><img src="legend/Incidenciadelictiva20192022_3_Roboacasahabitaciónconviolencia0.png" /></td><td>Robo a casa habitación con violencia</td></tr><tr><td style="text-align: center;"><img src="legend/Incidenciadelictiva20192022_3_Roboacasahabitaciónsinviolencia1.png" /></td><td>Robo a casa habitación sin violencia</td></tr><tr><td style="text-align: center;"><img src="legend/Incidenciadelictiva20192022_3_Roboatranseúnteconviolencia2.png" /></td><td>Robo a transeúnte con violencia</td></tr><tr><td style="text-align: center;"><img src="legend/Incidenciadelictiva20192022_3_Roboatranseúntesinviolencia3.png" /></td><td>Robo a transeúnte sin violencia</td></tr><tr><td style="text-align: center;"><img src="legend/Incidenciadelictiva20192022_3_Robodevehículoconviolencia4.png" /></td><td>Robo de vehículo con violencia</td></tr><tr><td style="text-align: center;"><img src="legend/Incidenciadelictiva20192022_3_Robootentativaderobodevehículosinviolencia5.png" /></td><td>Robo o tentativa de robo de vehículo sin violencia</td></tr></table>': layer_Incidenciadelictiva20192022_3,'Áreas de incidencia acumulada 2019-2022<br /><table><tr><td style="text-align: center;"><img src="legend/reasdeincidenciaacumulada20192022_2_010.png" /></td><td>0 - 1</td></tr><tr><td style="text-align: center;"><img src="legend/reasdeincidenciaacumulada20192022_2_131.png" /></td><td>1 - 3</td></tr><tr><td style="text-align: center;"><img src="legend/reasdeincidenciaacumulada20192022_2_352.png" /></td><td>3 - 5</td></tr><tr><td style="text-align: center;"><img src="legend/reasdeincidenciaacumulada20192022_2_593.png" /></td><td>5 - 9</td></tr><tr><td style="text-align: center;"><img src="legend/reasdeincidenciaacumulada20192022_2_9174.png" /></td><td>9 - 17</td></tr></table>': layer_reasdeincidenciaacumulada20192022_2,"OpenStreetMap": layer_OpenStreetMap_1,"Google Satellite": layer_GoogleSatellite_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"ao_hechos": "int","Tipo delic": "str","mes_hechos": "str","hora_hecho": "str","delito": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_ao_hechos = document.createElement("div");
+            div_ao_hechos.id = "div_ao_hechos";
+            div_ao_hechos.className = "slider";
+            document.getElementById("menu").appendChild(div_ao_hechos);
+            var lab_ao_hechos = document.createElement('div');
+            lab_ao_hechos.innerHTML  = 'ao_hechos: <span id="val_ao_hechos"></span>';
+            lab_ao_hechos.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_ao_hechos);
+            var reset_ao_hechos = document.createElement('div');
+            reset_ao_hechos.innerHTML = 'clear filter';
+            reset_ao_hechos.className = 'filterlabel';
+            lab_ao_hechos.className = 'filterlabel';
+            reset_ao_hechos.onclick = function() {
+                sel_ao_hechos.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_ao_hechos);
+            var sel_ao_hechos = document.getElementById('div_ao_hechos');
+            noUiSlider.create(sel_ao_hechos, {
+                connect: true,
+                start: [2019, 2022],
+                step: 1,
+                format: wNumb({
+                    decimals: 0,
+                    }),
+                range: {
+                min: 2019,
+                max: 2022
+                }
+            });
+            sel_ao_hechos.noUiSlider.on('update', function (values) {
+            filterVals =[];
+            for (value in values){
+            filterVals.push(parseInt(value))
+            }
+            val_ao_hechos = document.getElementById('val_ao_hechos');
+            val_ao_hechos.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Tipodelic = document.createElement('div');
+            div_Tipodelic.id = "div_Tipodelic";
+            div_Tipodelic.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Tipodelic);
+            sel_Tipodelic = document.createElement('select');
+            sel_Tipodelic.multiple = true;
+            sel_Tipodelic.size = 6;
+            sel_Tipodelic.id = "sel_Tipodelic";
+            var Tipodelic_options_str = "<option value='' unselected></option>";
+            sel_Tipodelic.onchange = function(){filterFunc()};
+            Tipodelic_options_str  += '<option value="Robo a casa habitación con violencia">Robo a casa habitación con violencia</option>';
+            Tipodelic_options_str  += '<option value="Robo a casa habitación sin violencia">Robo a casa habitación sin violencia</option>';
+            Tipodelic_options_str  += '<option value="Robo a transeúnte con violencia">Robo a transeúnte con violencia</option>';
+            Tipodelic_options_str  += '<option value="Robo a transeúnte sin violencia">Robo a transeúnte sin violencia</option>';
+            Tipodelic_options_str  += '<option value="Robo de vehículo con violencia">Robo de vehículo con violencia</option>';
+            Tipodelic_options_str  += '<option value="Robo de vehículo sin violencia">Robo de vehículo sin violencia</option>';
+            sel_Tipodelic.innerHTML = Tipodelic_options_str;
+            div_Tipodelic.appendChild(sel_Tipodelic);
+            var lab_Tipodelic = document.createElement('div');
+            lab_Tipodelic.innerHTML = 'Tipo delic';
+            lab_Tipodelic.className = 'filterlabel';
+            div_Tipodelic.appendChild(lab_Tipodelic);
+            var reset_Tipodelic = document.createElement('div');
+            reset_Tipodelic.innerHTML = 'clear filter';
+            reset_Tipodelic.className = 'filterlabel';
+            reset_Tipodelic.onclick = function() {
+                var options = document.getElementById("sel_Tipodelic").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Tipodelic.appendChild(reset_Tipodelic);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_mes_hechos = document.createElement('div');
+            div_mes_hechos.id = "div_mes_hechos";
+            div_mes_hechos.className= "filterselect";
+            document.getElementById("menu").appendChild(div_mes_hechos);
+            sel_mes_hechos = document.createElement('select');
+            sel_mes_hechos.multiple = true;
+            sel_mes_hechos.size = 10;
+            sel_mes_hechos.id = "sel_mes_hechos";
+            var mes_hechos_options_str = "<option value='' unselected></option>";
+            sel_mes_hechos.onchange = function(){filterFunc()};
+            mes_hechos_options_str  += '<option value="Abril">Abril</option>';
+            mes_hechos_options_str  += '<option value="Agosto">Agosto</option>';
+            mes_hechos_options_str  += '<option value="Diciembre">Diciembre</option>';
+            mes_hechos_options_str  += '<option value="Enero">Enero</option>';
+            mes_hechos_options_str  += '<option value="Febrero">Febrero</option>';
+            mes_hechos_options_str  += '<option value="Julio">Julio</option>';
+            mes_hechos_options_str  += '<option value="Junio">Junio</option>';
+            mes_hechos_options_str  += '<option value="Marzo">Marzo</option>';
+            mes_hechos_options_str  += '<option value="Mayo">Mayo</option>';
+            mes_hechos_options_str  += '<option value="Noviembre">Noviembre</option>';
+            mes_hechos_options_str  += '<option value="Octubre">Octubre</option>';
+            mes_hechos_options_str  += '<option value="Septiembre">Septiembre</option>';
+            sel_mes_hechos.innerHTML = mes_hechos_options_str;
+            div_mes_hechos.appendChild(sel_mes_hechos);
+            var lab_mes_hechos = document.createElement('div');
+            lab_mes_hechos.innerHTML = 'mes_hechos';
+            lab_mes_hechos.className = 'filterlabel';
+            div_mes_hechos.appendChild(lab_mes_hechos);
+            var reset_mes_hechos = document.createElement('div');
+            reset_mes_hechos.innerHTML = 'clear filter';
+            reset_mes_hechos.className = 'filterlabel';
+            reset_mes_hechos.onclick = function() {
+                var options = document.getElementById("sel_mes_hechos").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_mes_hechos.appendChild(reset_mes_hechos);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_hora_hecho = document.createElement('div');
+            div_hora_hecho.id = "div_hora_hecho";
+            div_hora_hecho.className= "filterselect";
+            document.getElementById("menu").appendChild(div_hora_hecho);
+            sel_hora_hecho = document.createElement('select');
+            sel_hora_hecho.multiple = true;
+            sel_hora_hecho.size = 10;
+            sel_hora_hecho.id = "sel_hora_hecho";
+            var hora_hecho_options_str = "<option value='' unselected></option>";
+            sel_hora_hecho.onchange = function(){filterFunc()};
+            hora_hecho_options_str  += '<option value="00:00:00.000">00:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="00:03:00.000">00:03:00.000</option>';
+            hora_hecho_options_str  += '<option value="00:20:00.000">00:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="00:27:00.000">00:27:00.000</option>';
+            hora_hecho_options_str  += '<option value="00:30:00.000">00:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="00:40:00.000">00:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:00:00.000">01:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:10:00.000">01:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:15:00.000">01:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:28:00.000">01:28:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:30:00.000">01:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:31:00.000">01:31:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:45:00.000">01:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:48:00.000">01:48:00.000</option>';
+            hora_hecho_options_str  += '<option value="01:50:00.000">01:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="02:00:00.000">02:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="02:05:00.000">02:05:00.000</option>';
+            hora_hecho_options_str  += '<option value="02:23:00.000">02:23:00.000</option>';
+            hora_hecho_options_str  += '<option value="02:30:00.000">02:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="02:37:00.000">02:37:00.000</option>';
+            hora_hecho_options_str  += '<option value="02:51:00.000">02:51:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:00:00.000">03:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:10:00.000">03:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:15:00.000">03:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:20:00.000">03:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:25:00.000">03:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:30:00.000">03:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:34:00.000">03:34:00.000</option>';
+            hora_hecho_options_str  += '<option value="03:55:00.000">03:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="04:00:00.000">04:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="04:10:00.000">04:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="04:27:00.000">04:27:00.000</option>';
+            hora_hecho_options_str  += '<option value="04:40:00.000">04:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="04:45:00.000">04:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:00:00.000">05:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:01:00.000">05:01:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:10:00.000">05:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:30:00.000">05:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:35:00.000">05:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:49:00.000">05:49:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:52:00.000">05:52:00.000</option>';
+            hora_hecho_options_str  += '<option value="05:57:00.000">05:57:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:00:00.000">06:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:07:00.000">06:07:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:10:00.000">06:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:25:00.000">06:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:30:00.000">06:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:32:00.000">06:32:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:40:00.000">06:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="06:52:00.000">06:52:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:00:00.000">07:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:02:00.000">07:02:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:10:00.000">07:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:25:00.000">07:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:30:00.000">07:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:32:00.000">07:32:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:33:00.000">07:33:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:35:00.000">07:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:45:00.000">07:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:54:00.000">07:54:00.000</option>';
+            hora_hecho_options_str  += '<option value="07:58:00.000">07:58:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:00:00.000">08:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:03:00.000">08:03:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:04:00.000">08:04:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:15:00.000">08:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:20:00.000">08:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:25:00.000">08:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:30:00.000">08:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:41:00.000">08:41:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:45:00.000">08:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:50:00.000">08:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:55:00.000">08:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="08:58:00.000">08:58:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:00:00.000">09:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:04:00.000">09:04:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:10:00.000">09:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:15:00.000">09:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:21:00.000">09:21:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:22:00.000">09:22:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:30:00.000">09:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="09:49:00.000">09:49:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:00:00.000">10:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:10:00.000">10:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:15:00.000">10:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:20:00.000">10:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:30:00.000">10:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:33:00.000">10:33:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:45:00.000">10:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:50:00.000">10:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:51:00.000">10:51:00.000</option>';
+            hora_hecho_options_str  += '<option value="10:55:00.000">10:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:00:00.000">11:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:05:00.000">11:05:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:10:00.000">11:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:12:00.000">11:12:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:13:00.000">11:13:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:15:00.000">11:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:20:00.000">11:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:21:00.000">11:21:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:30:00.000">11:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:40:00.000">11:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:45:00.000">11:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:50:00.000">11:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:51:00.000">11:51:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:54:00.000">11:54:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:55:00.000">11:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="11:58:00.000">11:58:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:00:00.000">12:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:05:00.000">12:05:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:08:00.000">12:08:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:10:00.000">12:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:12:00.000">12:12:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:17:00.000">12:17:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:19:00.000">12:19:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:20:00.000">12:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:22:00.000">12:22:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:25:00.000">12:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:29:00.000">12:29:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:30:00.000">12:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:38:00.000">12:38:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:40:00.000">12:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:45:00.000">12:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="12:50:00.000">12:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:00:00.000">13:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:03:00.000">13:03:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:10:00.000">13:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:15:00.000">13:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:30:00.000">13:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:35:00.000">13:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:38:00.000">13:38:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:40:00.000">13:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="13:50:00.000">13:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:00:00.000">14:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:09:00.000">14:09:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:10:00.000">14:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:15:00.000">14:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:28:00.000">14:28:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:30:00.000">14:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:36:00.000">14:36:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:40:00.000">14:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:44:00.000">14:44:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:47:00.000">14:47:00.000</option>';
+            hora_hecho_options_str  += '<option value="14:50:00.000">14:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:00:00.000">15:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:06:00.000">15:06:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:10:00.000">15:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:14:00.000">15:14:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:15:00.000">15:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:20:00.000">15:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:30:00.000">15:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:35:00.000">15:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:37:00.000">15:37:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:38:00.000">15:38:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:40:00.000">15:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:45:00.000">15:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="15:50:00.000">15:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:00:00.000">16:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:05:00.000">16:05:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:10:00.000">16:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:15:00.000">16:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:16:00.000">16:16:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:20:00.000">16:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:30:00.000">16:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:35:00.000">16:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:40:00.000">16:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:47:00.000">16:47:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:53:00.000">16:53:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:55:00.000">16:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="16:56:00.000">16:56:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:00:00.000">17:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:08:00.000">17:08:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:12:00.000">17:12:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:20:00.000">17:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:25:00.000">17:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:30:00.000">17:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:35:00.000">17:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:38:00.000">17:38:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:40:00.000">17:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="17:45:00.000">17:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:00:00.000">18:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:10:00.000">18:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:15:00.000">18:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:18:00.000">18:18:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:20:00.000">18:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:30:00.000">18:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:40:00.000">18:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:45:00.000">18:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:50:00.000">18:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:55:00.000">18:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="18:57:00.000">18:57:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:00:00.000">19:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:06:00.000">19:06:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:10:00.000">19:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:12:00.000">19:12:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:20:00.000">19:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:25:00.000">19:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:30:00.000">19:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:35:00.000">19:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:38:00.000">19:38:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:45:00.000">19:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:50:00.000">19:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="19:55:00.000">19:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:00:00.000">20:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:05:00.000">20:05:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:10:00.000">20:10:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:15:00.000">20:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:30:00.000">20:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:34:00.000">20:34:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:35:00.000">20:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:40:00.000">20:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:45:00.000">20:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:50:00.000">20:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:57:00.000">20:57:00.000</option>';
+            hora_hecho_options_str  += '<option value="20:58:00.000">20:58:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:00:00.000">21:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:04:00.000">21:04:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:07:00.000">21:07:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:14:00.000">21:14:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:15:00.000">21:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:20:00.000">21:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:23:00.000">21:23:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:25:00.000">21:25:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:30:00.000">21:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:35:00.000">21:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:40:00.000">21:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:48:00.000">21:48:00.000</option>';
+            hora_hecho_options_str  += '<option value="21:49:00.000">21:49:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:00:00.000">22:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:05:00.000">22:05:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:06:00.000">22:06:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:08:00.000">22:08:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:15:00.000">22:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:20:00.000">22:20:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:29:00.000">22:29:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:30:00.000">22:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:35:00.000">22:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:38:00.000">22:38:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:40:00.000">22:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:45:00.000">22:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:50:00.000">22:50:00.000</option>';
+            hora_hecho_options_str  += '<option value="22:55:00.000">22:55:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:00:00.000">23:00:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:15:00.000">23:15:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:30:00.000">23:30:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:31:00.000">23:31:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:35:00.000">23:35:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:40:00.000">23:40:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:45:00.000">23:45:00.000</option>';
+            hora_hecho_options_str  += '<option value="23:55:00.000">23:55:00.000</option>';
+            sel_hora_hecho.innerHTML = hora_hecho_options_str;
+            div_hora_hecho.appendChild(sel_hora_hecho);
+            var lab_hora_hecho = document.createElement('div');
+            lab_hora_hecho.innerHTML = 'hora_hecho';
+            lab_hora_hecho.className = 'filterlabel';
+            div_hora_hecho.appendChild(lab_hora_hecho);
+            var reset_hora_hecho = document.createElement('div');
+            reset_hora_hecho.innerHTML = 'clear filter';
+            reset_hora_hecho.className = 'filterlabel';
+            reset_hora_hecho.onclick = function() {
+                var options = document.getElementById("sel_hora_hecho").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_hora_hecho.appendChild(reset_hora_hecho);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_delito = document.createElement('div');
+            div_delito.id = "div_delito";
+            div_delito.className= "filterselect";
+            document.getElementById("menu").appendChild(div_delito);
+            sel_delito = document.createElement('select');
+            sel_delito.multiple = true;
+            sel_delito.size = 10;
+            sel_delito.id = "sel_delito";
+            var delito_options_str = "<option value='' unselected></option>";
+            sel_delito.onchange = function(){filterFunc()};
+            delito_options_str  += '<option value="PRIV. ILEGAL DE LA LIB. Y ROBO DE VEHICULO">PRIV. ILEGAL DE LA LIB. Y ROBO DE VEHICULO</option>';
+            delito_options_str  += '<option value="ROBO A CASA HABITACION CON VIOLENCIA">ROBO A CASA HABITACION CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A CASA HABITACION SIN VIOLENCIA">ROBO A CASA HABITACION SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A CASA HABITACION Y VEHICULO CON VIOLENCIA">ROBO A CASA HABITACION Y VEHICULO CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A CASA HABITACION Y VEHICULO SIN VIOLENCIA">ROBO A CASA HABITACION Y VEHICULO SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE A BORDO DE TAXI PUBLICO Y PRIVADO SIN VIOLENCIA">ROBO A TRANSEUNTE A BORDO DE TAXI PUBLICO Y PRIVADO SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE A BORDO DE TAXI PÃšBLICO Y PRIVADO CON VIOLENCIA">ROBO A TRANSEUNTE A BORDO DE TAXI PÃšBLICO Y PRIVADO CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE DE CELULAR CON VIOLENCIA">ROBO A TRANSEUNTE DE CELULAR CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE DE CELULAR SIN VIOLENCIA">ROBO A TRANSEUNTE DE CELULAR SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE EN NEGOCIO CON VIOLENCIA">ROBO A TRANSEUNTE EN NEGOCIO CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE EN PARQUES Y MERCADOS CON VIOLENCIA">ROBO A TRANSEUNTE EN PARQUES Y MERCADOS CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE EN RESTAURANT CON VIOLENCIA">ROBO A TRANSEUNTE EN RESTAURANT CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE EN VIA PUBLICA (NOMINA) CON VIOLENCIA">ROBO A TRANSEUNTE EN VIA PUBLICA (NOMINA) CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE EN VIA PUBLICA CON VIOLENCIA">ROBO A TRANSEUNTE EN VIA PUBLICA CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE EN VIA PUBLICA SIN VIOLENCIA">ROBO A TRANSEUNTE EN VIA PUBLICA SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE SALIENDO DEL BANCO CON VIOLENCIA">ROBO A TRANSEUNTE SALIENDO DEL BANCO CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO A TRANSEUNTE SALIENDO DEL CAJERO CON VIOLENCIA">ROBO A TRANSEUNTE SALIENDO DEL CAJERO CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO DE MOTOCICLETA CON VIOLENCIA">ROBO DE MOTOCICLETA CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO DE MOTOCICLETA SIN VIOLENCIA">ROBO DE MOTOCICLETA SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO DE VEHICULO DE PEDALES">ROBO DE VEHICULO DE PEDALES</option>';
+            delito_options_str  += '<option value="ROBO DE VEHICULO DE SERVICIO PARTICULAR CON VIOLENCIA">ROBO DE VEHICULO DE SERVICIO PARTICULAR CON VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO DE VEHICULO DE SERVICIO PARTICULAR SIN VIOLENCIA">ROBO DE VEHICULO DE SERVICIO PARTICULAR SIN VIOLENCIA</option>';
+            delito_options_str  += '<option value="ROBO DE VEHICULO EN PENSION, TALLER Y AGENCIAS C/V">ROBO DE VEHICULO EN PENSION, TALLER Y AGENCIAS C/V</option>';
+            delito_options_str  += '<option value="ROBO DE VEHICULO EN PENSION, TALLER Y AGENCIAS S/V">ROBO DE VEHICULO EN PENSION, TALLER Y AGENCIAS S/V</option>';
+            sel_delito.innerHTML = delito_options_str;
+            div_delito.appendChild(sel_delito);
+            var lab_delito = document.createElement('div');
+            lab_delito.innerHTML = 'delito';
+            lab_delito.className = 'filterlabel';
+            div_delito.appendChild(lab_delito);
+            var reset_delito = document.createElement('div');
+            reset_delito.innerHTML = 'clear filter';
+            reset_delito.className = 'filterlabel';
+            reset_delito.onclick = function() {
+                var options = document.getElementById("sel_delito").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_delito.appendChild(reset_delito);
+        </script>
+    </body>
+</html>
